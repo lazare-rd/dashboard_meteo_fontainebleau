@@ -1,7 +1,7 @@
 import requests
 from src.url_management import UrlGenerator
 
-class DataRetriever :
+class DataWriter :
 
     def get(self, api_url) :
         api_response = requests.get(api_url)
@@ -9,8 +9,8 @@ class DataRetriever :
     
     def init(self) :
         self.generator = UrlGenerator.UrlGenerator()
-        self.modeles = self.generator.getFileLines('src/url_management/modeles.txt')
-        self.attributes = self.generator.getFileLines('src/url_management/attributs.txt')
+        self.modeles = self.generator.getFileLines('src/url_management/textFiles/modeles.txt')
+        self.attributes = self.generator.getFileLines('src/url_management/textFiles/attributs.txt')
         self.coordo = self.generator.getCoordo()
     
     def build_all_api_url(self) :
@@ -24,11 +24,18 @@ class DataRetriever :
                                         self.attributes)
                 urls[city].append(url)
         return urls
+
+    def write_all_api_urls(self, api_urls) :
+        with open('src/url_management/textFiles/urls_api.txt','w') as file :
+            for city in api_urls.keys():
+                for url in api_urls[city]:
+                    file.write(f'{city} {url}\n')
     
 def main():
-    retriever = DataRetriever()
-    retriever.init()
-    print(retriever.build_all_api_url())
+    writer = DataWriter()
+    writer.init()
+    urls_apis = writer.build_all_api_url()
+    writer.write_all_api_urls(urls_apis)
 
 if __name__ == '__main__':
     main()

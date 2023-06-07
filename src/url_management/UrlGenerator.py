@@ -6,7 +6,7 @@ class UrlGenerator :
     # 
     def getCoordo(self) : 
         coordo = {}
-        with open('src/url_management/coordo.txt', 'r') as file :
+        with open('src/url_management/textFiles/coordo.txt', 'r') as file :
             for line in file :
                 tempo = line.split('/')
                 coordo[tempo[2][:-1]] = tempo[0:2]
