@@ -2,17 +2,21 @@ import requests
 from src.url_management import UrlGenerator
 
 class DataWriter :
-
-    def get(self, api_url) :
-        api_response = requests.get(api_url)
-        return api_response
     
-    def init(self) :
+    #
+    # The constructor gets all the data needed (modeles, attributs, coordinates) to build the urls
+    #
+    def __init__(self) :
         self.generator = UrlGenerator.UrlGenerator()
         self.modeles = self.generator.getFileLines('src/url_management/textFiles/modeles.txt')
         self.attributes = self.generator.getFileLines('src/url_management/textFiles/attributs.txt')
         self.coordo = self.generator.getCoordo()
     
+    #
+    # Returns all the api urls in a dict( city : [urls] ).
+    # There is one url by modele
+    # @return dict( str : [str] )
+    #
     def build_all_api_url(self) :
         urls = {}
         for city in self.coordo.keys() :
@@ -25,6 +29,10 @@ class DataWriter :
                 urls[city].append(url)
         return urls
 
+    #
+    # Writes all the api_urls in src/url_management/textFiles/urls_api.txt
+    # @param dict( str : [str] ) (keys are cities and values are list of urls)
+    #
     def write_all_api_urls(self, api_urls) :
         with open('src/url_management/textFiles/urls_api.txt','w') as file :
             for city in api_urls.keys():
@@ -33,7 +41,6 @@ class DataWriter :
     
 def main():
     writer = DataWriter()
-    writer.init()
     urls_apis = writer.build_all_api_url()
     writer.write_all_api_urls(urls_apis)
 
