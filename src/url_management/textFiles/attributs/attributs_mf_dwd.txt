@@ -1,0 +1,7 @@
+temperature_2m
+relativehumidity_2m
+apparent_temperature
+precipitation
+cloudcover
+windspeed_10m
+winddirection_10m

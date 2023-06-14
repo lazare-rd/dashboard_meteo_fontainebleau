@@ -1,7 +1,4 @@
 temperature_2m
-relativehumidity_2m
-apparent_temperature
-precipitation_probability
 precipitation
 cloudcover
 windspeed_10m
